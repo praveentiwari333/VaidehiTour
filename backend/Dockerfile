@@ -1,10 +1,10 @@
-# Use OpenJDK 17 for Spring Boot
-FROM openjdk:17-jdk-slim
+# Use a reliable JDK 17 base image
+FROM eclipse-temurin:17-jdk-jammy
 
 # Set working directory
 WORKDIR /app
 
-# Copy all project files
+# Copy project files
 COPY . .
 
 # Give permission to mvnw
@@ -13,8 +13,9 @@ RUN chmod +x mvnw
 # Build the project
 RUN ./mvnw clean package -DskipTests
 
-# Expose the port Spring Boot runs on
+# Expose port
 EXPOSE 8080
 
 # Run the application
 CMD ["java", "-jar", "target/*.jar"]
+
