@@ -1,21 +1,21 @@
-# Use a reliable JDK 17 base image
+# Use a stable and supported JDK 17 image
 FROM eclipse-temurin:17-jdk-jammy
 
 # Set working directory
 WORKDIR /app
 
-# Copy project files
-COPY . .
+# Copy Maven wrapper and project files
+COPY mvnw mvnw.cmd pom.xml ./
+COPY .mvn .mvn
+COPY src ./src
 
-# Give permission to mvnw
-RUN chmod +x mvnw
+# Build the application
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
-# Build the project
-RUN ./mvnw clean package -DskipTests
-
-# Expose port
+# Expose the default Spring Boot port
 EXPOSE 8080
 
-# Run the application
+# Run the Spring Boot application
 CMD ["java", "-jar", "target/*.jar"]
+
 
