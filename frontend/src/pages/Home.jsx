@@ -18,7 +18,7 @@ export default function Home() {
       {/* Call to action buttons */}
       <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
         <a
-          href="tel:+919876543210"
+          href="tel:+917355669873"
           className="inline-block bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition"
         >
           📞 Call Now to Book
