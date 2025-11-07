@@ -1,21 +1,29 @@
-# Use a stable and supported JDK 17 image
-FROM eclipse-temurin:17-jdk-jammy
+# ======== Stage 1: Build the Spring Boot app ========
+FROM eclipse-temurin:17-jdk-jammy AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy Maven wrapper and project files
+# Copy project files
 COPY mvnw mvnw.cmd pom.xml ./
 COPY .mvn .mvn
 COPY src ./src
 
-# Build the application
+# Build the JAR
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
-# Expose the default Spring Boot port
+
+# ======== Stage 2: Run the app ========
+FROM eclipse-temurin:17-jre-jammy
+
+WORKDIR /app
+
+# Copy only the final JAR from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the app port (Render provides PORT automatically)
 EXPOSE 8080
 
-# Run the Spring Boot application
-CMD ["java", "-jar", "target/*.jar"]
+# Run the JAR
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
