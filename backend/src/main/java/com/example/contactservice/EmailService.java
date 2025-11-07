@@ -26,7 +26,7 @@ public class EmailService {
                     "name", "Vaidehi Tour & Travel"
             ));
             payload.put("to", new Object[]{
-                    Map.of("email", "dkumarsh6@gmail.com", "name", "Admin")
+                    Map.of("email", "javapraveenkumar77@gmail.com", "name", "Admin")
             });
             payload.put("subject", "New Contact from " + contact.getName() + ": " + contact.getSubject());
             payload.put("htmlContent",
